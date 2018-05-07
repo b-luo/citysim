@@ -36,18 +36,20 @@ GameState *Game::peekState() {
 }
 
 void Game::gameLoop() {
+	// Start the clock
 	sf::Clock clock;
 
 	while (window.isOpen()) {
+		// Record the time elapsed at each frame
 		sf::Time elapsed = clock.restart();
-		double dt = elapsed.asSeconds();
+		double timestep = elapsed.asSeconds();
 
 		if (peekState() == nullptr) continue;
 		GameState *currState = peekState();
 		currState->handleInput();
-		currState->update(dt);
+		currState->update(timestep);
 		window.clear(sf::Color::Black);
-		currState->draw(dt);
+		currState->draw(timestep);
 		window.display();
 	}
 }
